@@ -1,0 +1,47 @@
+HTTrack3.49-2+htsswf+htsjava launched on Mon, 28 Nov 2022 22:02:49 at https://templatekit.jegtheme.com/pirus/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://templatekit.jegtheme.com/pirus/ -O1 "C:\Users\User\Desktop\test\werobotsdarktheme" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+22:03:11	Error: 	"Forbidden" (403) at link https://templatekit.jegtheme.com/pirus/xmlrpc.php (from https://templatekit.jegtheme.com/pirus/)
+22:03:23	Error: 	"Forbidden" (403) at link https://templatekit.jegtheme.com/pirus/xmlrpc.php?rsd (from https://templatekit.jegtheme.com/pirus/)
+22:04:09	Warning: 	File not parsed, looks like binary: https://templatekit.jegtheme.com/pirus/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff2?5.15.0
+22:04:09	Warning: 	File not parsed, looks like binary: https://templatekit.jegtheme.com/pirus/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.woff2
+22:04:09	Warning: 	File not parsed, looks like binary: https://templatekit.jegtheme.com/pirus/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-regular-400.woff2
+22:04:09	Warning: 	File not parsed, looks like binary: https://templatekit.jegtheme.com/pirus/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-solid-900.woff2
+22:04:14	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=6
+22:04:14	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=6 to https://templatekit.jegtheme.com/pirus/home-2/
+22:04:14	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=219
+22:04:14	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=219 to https://templatekit.jegtheme.com/pirus/services/
+22:04:14	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=582
+22:04:14	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=582 to https://templatekit.jegtheme.com/pirus/services-2/
+22:04:15	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=786
+22:04:15	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=786 to https://templatekit.jegtheme.com/pirus/single-project/
+22:04:15	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=272
+22:04:15	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=272 to https://templatekit.jegtheme.com/pirus/our-works/
+22:04:17	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=298
+22:04:17	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=298 to https://templatekit.jegtheme.com/pirus/about/
+22:04:17	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=447
+22:04:17	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=447 to https://templatekit.jegtheme.com/pirus/blog/
+22:04:24	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=377
+22:04:24	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=377 to https://templatekit.jegtheme.com/pirus/contact-us-1/
+22:04:24	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=571
+22:04:24	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=571 to https://templatekit.jegtheme.com/pirus/contact-us-2/
+22:04:25	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=1077
+22:04:25	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=1077 to https://templatekit.jegtheme.com/pirus/2021/01/13/could-this-vr-sketching-tool-be-coming-of-age-for-designers-in-the-future/
+22:04:25	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=456
+22:04:25	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=456 to https://templatekit.jegtheme.com/pirus/2020/12/01/8-cities-that-show-you-what-the-future-will-look-like/
+22:04:25	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=150
+22:04:25	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=150 to https://templatekit.jegtheme.com/pirus/2020/11/08/15-gift-ideas-for-mom-and-dad-wherever-they-are-this-year/
+22:04:25	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=141
+22:04:25	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=141 to https://templatekit.jegtheme.com/pirus/2020/11/08/yes-you-should-be-using-apple-pay-or-google-pay/
+22:04:26	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=135
+22:04:26	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=135 to https://templatekit.jegtheme.com/pirus/2020/11/08/how-to-trick-out-your-iphone-home-screen-in-ios-14/
+22:04:26	Warning: 	Moved Permanently for https://templatekit.jegtheme.com/pirus/?p=130
+22:04:26	Warning: 	File has moved from https://templatekit.jegtheme.com/pirus/?p=130 to https://templatekit.jegtheme.com/pirus/2020/11/08/22-face-masks-we-actually-like-to-wear/
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 minutes 37 seconds : 299 links scanned, 281 files written (35833799 bytes overall) [24712780 bytes received at 254770 bytes/sec], 35583003 bytes transferred using HTTP compression in 277 files, ratio 67%, 37.3 requests per connection
+(2 errors, 34 warnings, 0 messages)
