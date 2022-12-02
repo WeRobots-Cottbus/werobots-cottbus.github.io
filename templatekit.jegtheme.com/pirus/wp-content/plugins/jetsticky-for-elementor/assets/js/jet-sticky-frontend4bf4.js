@@ -1,192 +1,192 @@
-( function( $, elementor ) {
+(function($, elementor) {
 
 	'use strict';
 
 	var JetSticky = {
 
 		init: function() {
-			elementor.hooks.addAction( 'frontend/element_ready/column', JetSticky.elementorColumn );
+			elementor.hooks.addAction('frontend/element_ready/column', JetSticky.elementorColumn);
 
-			elementorFrontend.hooks.addAction( 'frontend/element_ready/section', JetSticky.setStickySection );
+			elementorFrontend.hooks.addAction('frontend/element_ready/section', JetSticky.setStickySection);
 
-			$( JetSticky.stickySection );
+			$(JetSticky.stickySection);
 		},
 
-		elementorColumn: function( $scope ) {
-			var $target  = $scope,
-				$window  = $( window ),
-				columnId = $target.data( 'id' ),
-				editMode = Boolean( elementor.isEditMode() ),
-				settings = {},
-				stickyInstance = null,
-				stickyInstanceOptions = {
-					topSpacing: 50,
-					bottomSpacing: 50,
-					containerSelector: '.elementor-section',
-					innerWrapperSelector: '.elementor-widget-wrap'
-				};
+		elementorColumn: function($scope) {
+			var $target = $scope
+			  , $window = $(window)
+			  , columnId = $target.data('id')
+			  , editMode = Boolean(elementor.isEditMode())
+			  , settings = {}
+			  , stickyInstance = null
+			  , stickyInstanceOptions = {
+				topSpacing: 50,
+				bottomSpacing: 50,
+				containerSelector: '.elementor-section',
+				innerWrapperSelector: '.elementor-widget-wrap'
+			};
 
-			if ( ! editMode ) {
-				settings = $target.data( 'jet-sticky-column-settings' );
+			if (!editMode) {
+				settings = $target.data('jet-sticky-column-settings');
 
-				if ( $target.hasClass( 'jet-sticky-column-sticky' ) ) {
+				if ($target.hasClass('jet-sticky-column-sticky')) {
 
-					if ( -1 !== settings['stickyOn'].indexOf( elementorFrontend.getCurrentDeviceMode() ) ) {
+					if (-1 !== settings['stickyOn'].indexOf(elementorFrontend.getCurrentDeviceMode())) {
 
 						stickyInstanceOptions.topSpacing = settings['topSpacing'];
 						stickyInstanceOptions.bottomSpacing = settings['bottomSpacing'];
 
-						$target.data( 'stickyColumnInit', true );
-						stickyInstance = new StickySidebar( $target[0], stickyInstanceOptions );
+						$target.data('stickyColumnInit', true);
+						stickyInstance = new StickySidebar($target[0],stickyInstanceOptions);
 
-						$window.on( 'resize.JetStickyColumnSticky orientationchange.JetStickyColumnSticky', JetStickyTools.debounce( 50, resizeDebounce ) );
+						$window.on('resize.JetStickyColumnSticky orientationchange.JetStickyColumnSticky', JetStickyTools.debounce(50, resizeDebounce));
 					}
 				}
 			} else {
-				settings = JetSticky.columnEditorSettings( columnId );
+				settings = JetSticky.columnEditorSettings(columnId);
 
-				if ( 'true' === settings['sticky'] ) {
-					$target.addClass( 'jet-sticky-column-sticky' );
+				if ('true' === settings['sticky']) {
+					$target.addClass('jet-sticky-column-sticky');
 
-					if ( -1 !== settings['stickyOn'].indexOf( elementorFrontend.getCurrentDeviceMode() ) ) {
+					if (-1 !== settings['stickyOn'].indexOf(elementorFrontend.getCurrentDeviceMode())) {
 						stickyInstanceOptions.topSpacing = settings['topSpacing'];
 						stickyInstanceOptions.bottomSpacing = settings['bottomSpacing'];
 
-						$target.data( 'stickyColumnInit', true );
-						stickyInstance = new StickySidebar( $target[0], stickyInstanceOptions );
+						$target.data('stickyColumnInit', true);
+						stickyInstance = new StickySidebar($target[0],stickyInstanceOptions);
 
-						$window.on( 'resize.JetStickyColumnSticky orientationchange.JetStickyColumnSticky', JetStickyTools.debounce( 50, resizeDebounce ) );
+						$window.on('resize.JetStickyColumnSticky orientationchange.JetStickyColumnSticky', JetStickyTools.debounce(50, resizeDebounce));
 					}
 				}
 			}
 
 			function resizeDebounce() {
-				var currentDeviceMode = elementorFrontend.getCurrentDeviceMode(),
-					availableDevices  = settings['stickyOn'] || [],
-					isInit            = $target.data( 'stickyColumnInit' );
+				var currentDeviceMode = elementorFrontend.getCurrentDeviceMode()
+				  , availableDevices = settings['stickyOn'] || []
+				  , isInit = $target.data('stickyColumnInit');
 
-				if ( -1 !== availableDevices.indexOf( currentDeviceMode ) ) {
+				if (-1 !== availableDevices.indexOf(currentDeviceMode)) {
 
-					if ( ! isInit ) {
-						$target.data( 'stickyColumnInit', true );
-						stickyInstance = new StickySidebar( $target[0], stickyInstanceOptions );
+					if (!isInit) {
+						$target.data('stickyColumnInit', true);
+						stickyInstance = new StickySidebar($target[0],stickyInstanceOptions);
 						stickyInstance.updateSticky();
 					}
 				} else {
-					$target.data( 'stickyColumnInit', false );
+					$target.data('stickyColumnInit', false);
 					stickyInstance.destroy();
 				}
 			}
 
 		},
 
-		columnEditorSettings: function( columnId ) {
-			var editorElements = null,
-				columnData     = {};
+		columnEditorSettings: function(columnId) {
+			var editorElements = null
+			  , columnData = {};
 
-			if ( ! window.elementor.hasOwnProperty( 'elements' ) ) {
+			if (!window.elementor.hasOwnProperty('elements')) {
 				return false;
 			}
 
 			editorElements = window.elementor.elements;
 
-			if ( ! editorElements.models ) {
+			if (!editorElements.models) {
 				return false;
 			}
 
-			$.each( editorElements.models, function( index, obj ) {
+			$.each(editorElements.models, function(index, obj) {
 
-				$.each( obj.attributes.elements.models, function( index, obj ) {
-					if ( columnId == obj.id ) {
+				$.each(obj.attributes.elements.models, function(index, obj) {
+					if (columnId == obj.id) {
 						columnData = obj.attributes.settings.attributes;
 					}
-				} );
+				});
 
-			} );
+			});
 
 			return {
 				'sticky': columnData['jet_sticky_column_sticky_enable'] || false,
 				'topSpacing': columnData['jet_sticky_column_sticky_top_spacing'] || 50,
 				'bottomSpacing': columnData['jet_sticky_column_sticky_bottom_spacing'] || 50,
-				'stickyOn': columnData['jet_sticky_column_sticky_enable_on'] || [ 'desktop', 'tablet', 'mobile']
+				'stickyOn': columnData['jet_sticky_column_sticky_enable_on'] || ['desktop', 'tablet', 'mobile']
 			}
 		},
 
 		getStickySectionsDesktop: [],
-		getStickySectionsTablet:  [],
-		getStickySectionsMobile:  [],
+		getStickySectionsTablet: [],
+		getStickySectionsMobile: [],
 
-		setStickySection: function( $scope ) {
+		setStickySection: function($scope) {
 			var setStickySection = {
 
 				target: $scope,
 
-				isEditMode: Boolean( elementorFrontend.isEditMode() ),
+				isEditMode: Boolean(elementorFrontend.isEditMode()),
 
 				init: function() {
-					if ( this.isEditMode ) {
+					if (this.isEditMode) {
 						return;
 					}
 
-					if (  'yes' === this.getSectionSetting( 'jet_sticky_section_sticky' ) ) {
-						var availableDevices = this.getSectionSetting( 'jet_sticky_section_sticky_visibility' ) || [];
+					if ('yes' === this.getSectionSetting('jet_sticky_section_sticky')) {
+						var availableDevices = this.getSectionSetting('jet_sticky_section_sticky_visibility') || [];
 
-						if ( ! availableDevices[0] ) {
+						if (!availableDevices[0]) {
 							return;
 						}
 
-						if ( -1 !== availableDevices.indexOf( 'desktop' ) ) {
-							JetSticky.getStickySectionsDesktop.push( $scope );
+						if (-1 !== availableDevices.indexOf('desktop')) {
+							JetSticky.getStickySectionsDesktop.push($scope);
 						}
 
-						if ( -1 !== availableDevices.indexOf( 'tablet' ) ) {
-							JetSticky.getStickySectionsTablet.push( $scope );
+						if (-1 !== availableDevices.indexOf('tablet')) {
+							JetSticky.getStickySectionsTablet.push($scope);
 						}
 
-						if ( -1 !== availableDevices.indexOf( 'mobile' ) ) {
-							JetSticky.getStickySectionsMobile.push( $scope );
+						if (-1 !== availableDevices.indexOf('mobile')) {
+							JetSticky.getStickySectionsMobile.push($scope);
 						}
 					}
 				},
 
-				getSectionSetting: function( setting ){
-					var settings = {},
-						editMode = Boolean( elementorFrontend.isEditMode() );
+				getSectionSetting: function(setting) {
+					var settings = {}
+					  , editMode = Boolean(elementorFrontend.isEditMode());
 
-					if ( editMode ) {
-						if ( ! elementorFrontend.hasOwnProperty( 'config' ) ) {
+					if (editMode) {
+						if (!elementorFrontend.hasOwnProperty('config')) {
 							return;
 						}
 
-						if ( ! elementorFrontend.config.hasOwnProperty( 'elements' ) ) {
+						if (!elementorFrontend.config.hasOwnProperty('elements')) {
 							return;
 						}
 
-						if ( ! elementorFrontend.config.elements.hasOwnProperty( 'data' ) ) {
+						if (!elementorFrontend.config.elements.hasOwnProperty('data')) {
 							return;
 						}
 
-						var modelCID = this.target.data( 'model-cid' ),
-							editorSectionData = elementorFrontend.config.elements.data[ modelCID ];
+						var modelCID = this.target.data('model-cid')
+						  , editorSectionData = elementorFrontend.config.elements.data[modelCID];
 
-						if ( ! editorSectionData ) {
+						if (!editorSectionData) {
 							return;
 						}
 
-						if ( ! editorSectionData.hasOwnProperty( 'attributes' ) ) {
+						if (!editorSectionData.hasOwnProperty('attributes')) {
 							return;
 						}
 
 						settings = editorSectionData.attributes || {};
 					} else {
-						settings = this.target.data( 'settings' ) || {};
+						settings = this.target.data('settings') || {};
 					}
 
-					if ( ! settings[ setting ] ) {
+					if (!settings[setting]) {
 						return;
 					}
 
-					return settings[ setting ];
+					return settings[setting];
 				}
 			};
 
@@ -196,151 +196,149 @@
 		stickySection: function() {
 			var stickySection = {
 
-				isEditMode: Boolean( elementorFrontend.isEditMode() ),
+				isEditMode: Boolean(elementorFrontend.isEditMode()),
 
-				correctionSelector: $( '#wpadminbar' ),
+				correctionSelector: $('#wpadminbar'),
 
 				initDesktop: false,
-				initTablet:  false,
-				initMobile:  false,
+				initTablet: false,
+				initMobile: false,
 
 				init: function() {
-					if ( this.isEditMode ) {
+					if (this.isEditMode) {
 						return;
 					}
 
 					this.run();
-					$( window ).on( 'resize.JetStickySectionSticky orientationchange.JetStickySectionSticky', this.run.bind( this ) );
+					$(window).on('resize.JetStickySectionSticky orientationchange.JetStickySectionSticky', this.run.bind(this));
 				},
 
-				getOffset: function(){
+				getOffset: function() {
 					var offset = 0;
 
-					if ( this.correctionSelector[0] && 'fixed' === this.correctionSelector.css( 'position' ) ) {
-						offset = this.correctionSelector.outerHeight( true );
+					if (this.correctionSelector[0] && 'fixed' === this.correctionSelector.css('position')) {
+						offset = this.correctionSelector.outerHeight(true);
 					}
 
 					return offset;
 				},
 
 				run: function() {
-					var currentDeviceMode = elementorFrontend.getCurrentDeviceMode(),
-						transitionIn  = 'jet-sticky-transition-in',
-						transitionOut = 'jet-sticky-transition-out',
-						options = {
-							stickyClass: 'jet-sticky-section-sticky--stuck',
-							topSpacing: this.getOffset()
-						};
+					var currentDeviceMode = elementorFrontend.getCurrentDeviceMode()
+					  , transitionIn = 'jet-sticky-transition-in'
+					  , transitionOut = 'jet-sticky-transition-out'
+					  , options = {
+						stickyClass: 'jet-sticky-section-sticky--stuck',
+						topSpacing: this.getOffset()
+					};
 
-					function initSticky ( section, options ) {
-						section.jetStickySection( options )
-							.on( 'jetStickySection:stick', function( event ) {
-								$( event.target ).addClass( transitionIn );
-								setTimeout( function() {
-									$( event.target ).removeClass( transitionIn );
-								}, 3000 );
-							} )
-							.on( 'jetStickySection:unstick', function( event ) {
-								$( event.target ).addClass( transitionOut );
-								setTimeout( function() {
-									$( event.target ).removeClass( transitionOut );
-								}, 3000 );
-							} );
-						section.trigger( 'jetStickySection:activated' );
+					function initSticky(section, options) {
+						section.jetStickySection(options).on('jetStickySection:stick', function(event) {
+							$(event.target).addClass(transitionIn);
+							setTimeout(function() {
+								$(event.target).removeClass(transitionIn);
+							}, 3000);
+						}).on('jetStickySection:unstick', function(event) {
+							$(event.target).addClass(transitionOut);
+							setTimeout(function() {
+								$(event.target).removeClass(transitionOut);
+							}, 3000);
+						});
+						section.trigger('jetStickySection:activated');
 					}
 
-					if ( 'desktop' === currentDeviceMode && ! this.initDesktop ) {
-						if ( this.initTablet ) {
-							JetSticky.getStickySectionsTablet.forEach( function( section, i ) {
-								section.trigger( 'jetStickySection:detach' );
+					if ('desktop' === currentDeviceMode && !this.initDesktop) {
+						if (this.initTablet) {
+							JetSticky.getStickySectionsTablet.forEach(function(section, i) {
+								section.trigger('jetStickySection:detach');
 							});
 
 							this.initTablet = false;
 						}
 
-						if ( this.initMobile ) {
-							JetSticky.getStickySectionsMobile.forEach( function( section, i ) {
-								section.trigger( 'jetStickySection:detach' );
+						if (this.initMobile) {
+							JetSticky.getStickySectionsMobile.forEach(function(section, i) {
+								section.trigger('jetStickySection:detach');
 							});
 
 							this.initMobile = false;
 						}
 
-						if ( JetSticky.getStickySectionsDesktop[0] ) {
-							JetSticky.getStickySectionsDesktop.forEach( function( section, i ) {
+						if (JetSticky.getStickySectionsDesktop[0]) {
+							JetSticky.getStickySectionsDesktop.forEach(function(section, i) {
 
-								if ( JetSticky.getStickySectionsDesktop[i+1] ) {
-									options.stopper = JetSticky.getStickySectionsDesktop[i+1];
+								if (JetSticky.getStickySectionsDesktop[i + 1]) {
+									options.stopper = JetSticky.getStickySectionsDesktop[i + 1];
 								} else {
 									options.stopper = '';
 								}
 
-								initSticky( section, options );
+								initSticky(section, options);
 							});
 
 							this.initDesktop = true;
 						}
 					}
 
-					if ( 'tablet' === currentDeviceMode && ! this.initTablet ) {
-						if ( this.initDesktop ) {
-							JetSticky.getStickySectionsDesktop.forEach( function( section, i ) {
-								section.trigger( 'jetStickySection:detach' );
+					if ('tablet' === currentDeviceMode && !this.initTablet) {
+						if (this.initDesktop) {
+							JetSticky.getStickySectionsDesktop.forEach(function(section, i) {
+								section.trigger('jetStickySection:detach');
 							});
 
 							this.initDesktop = false;
 						}
 
-						if ( this.initMobile ) {
-							JetSticky.getStickySectionsMobile.forEach( function( section, i ) {
-								section.trigger( 'jetStickySection:detach' );
+						if (this.initMobile) {
+							JetSticky.getStickySectionsMobile.forEach(function(section, i) {
+								section.trigger('jetStickySection:detach');
 							});
 
 							this.initMobile = false;
 						}
 
-						if ( JetSticky.getStickySectionsTablet[0] ) {
-							JetSticky.getStickySectionsTablet.forEach( function( section, i ) {
-								if ( JetSticky.getStickySectionsTablet[i+1] ) {
-									options.stopper = JetSticky.getStickySectionsTablet[i+1];
+						if (JetSticky.getStickySectionsTablet[0]) {
+							JetSticky.getStickySectionsTablet.forEach(function(section, i) {
+								if (JetSticky.getStickySectionsTablet[i + 1]) {
+									options.stopper = JetSticky.getStickySectionsTablet[i + 1];
 								} else {
 									options.stopper = '';
 								}
 
-								initSticky( section, options );
+								initSticky(section, options);
 							});
 
 							this.initTablet = true;
 						}
 					}
 
-					if ( 'mobile' === currentDeviceMode && ! this.initMobile ) {
-						if ( this.initDesktop ) {
-							JetSticky.getStickySectionsDesktop.forEach( function( section, i ) {
-								section.trigger( 'jetStickySection:detach' );
+					if ('mobile' === currentDeviceMode && !this.initMobile) {
+						if (this.initDesktop) {
+							JetSticky.getStickySectionsDesktop.forEach(function(section, i) {
+								section.trigger('jetStickySection:detach');
 							});
 
 							this.initDesktop = false;
 						}
 
-						if ( this.initTablet ) {
-							JetSticky.getStickySectionsTablet.forEach( function( section, i ) {
-								section.trigger( 'jetStickySection:detach' );
+						if (this.initTablet) {
+							JetSticky.getStickySectionsTablet.forEach(function(section, i) {
+								section.trigger('jetStickySection:detach');
 							});
 
 							this.initTablet = false;
 						}
 
-						if ( JetSticky.getStickySectionsMobile[0] ) {
-							JetSticky.getStickySectionsMobile.forEach( function( section, i ) {
+						if (JetSticky.getStickySectionsMobile[0]) {
+							JetSticky.getStickySectionsMobile.forEach(function(section, i) {
 
-								if ( JetSticky.getStickySectionsMobile[i+1] ) {
-									options.stopper = JetSticky.getStickySectionsMobile[i+1];
+								if (JetSticky.getStickySectionsMobile[i + 1]) {
+									options.stopper = JetSticky.getStickySectionsMobile[i + 1];
 								} else {
 									options.stopper = '';
 								}
 
-								initSticky( section, options );
+								initSticky(section, options);
 							});
 
 							this.initMobile = true;
@@ -353,25 +351,26 @@
 		}
 	};
 
-	$( window ).on( 'elementor/frontend/init', JetSticky.init );
+	$(window).on('elementor/frontend/init', JetSticky.init);
 
 	var JetStickyTools = {
-		debounce: function( threshold, callback ) {
+		debounce: function(threshold, callback) {
 			var timeout;
 
-			return function debounced( $event ) {
+			return function debounced($event) {
 				function delayed() {
-					callback.call( this, $event );
+					callback.call(this, $event);
 					timeout = null;
 				}
 
-				if ( timeout ) {
-					clearTimeout( timeout );
+				if (timeout) {
+					clearTimeout(timeout);
 				}
 
-				timeout = setTimeout( delayed, threshold );
-			};
+				timeout = setTimeout(delayed, threshold);
+			}
+			;
 		}
 	}
 
-}( jQuery, window.elementorFrontend ) );
+}(jQuery, window.elementorFrontend));
