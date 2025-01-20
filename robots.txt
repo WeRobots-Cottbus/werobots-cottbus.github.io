@@ -1,0 +1,7 @@
+# robots.txt for https://we-robots.de
+
+User-Agent: *
+Disallow: /media/
+
+Sitemap: https://we-robots.de/sitemap.xml
+Sitemap: /sitemap.xml
